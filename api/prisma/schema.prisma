@@ -1,0 +1,66 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+  model User {
+  id  Int @default(autoincrement()) @id
+  email String @unique
+
+  hero Hero? @relation(fields: [heroId],references:[id])
+  heroId Int? @unique
+
+  tokens  Token[]
+
+  answers Answer[]
+}
+
+model Token {
+  id         Int       @id @default(autoincrement())
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  type       TokenType
+  emailToken String?   @unique // Only used for short lived email tokens
+  valid      Boolean   @default(true)
+  expiration DateTime
+
+  // Relation fields
+  user   User @relation(fields: [userId], references: [id])
+  userId Int
+}
+
+enum TokenType {
+  EMAIL // used as a short-lived token sent to the user's email
+  API
+}
+
+model Hero {
+    id          Int       @id @default(autoincrement())
+    name        String
+    photoURL    String
+
+    user User?
+
+}
+
+model Tip {
+    id          Int       @id @default(autoincrement())
+    question    String
+
+    answers Answer[]
+}
+
+model Answer {
+    id          Int       @id @default(autoincrement())
+    value       String
+
+    tip Tip @relation(fields: [tipId],references: [id])
+    tipId Int 
+
+    user User @relation(fields: [userId],references: [id])
+    userId Int
+}
