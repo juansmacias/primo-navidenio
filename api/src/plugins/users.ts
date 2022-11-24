@@ -4,6 +4,7 @@ import Boom from '@hapi/boom'
 import { API_AUTH_STATEGY } from './auth'
 import { isRequestedUser } from '../helpers/auth-helpers'
 import { NotFoundError } from '@prisma/client/runtime'
+import { getAvailableHero } from '../helpers/heros-helpers'
 
 const userInputValidator = Joi.object({
     email: Joi.string().email().alter({
@@ -179,23 +180,22 @@ async function assignHeroUserhander(request: Hapi.Request, h: Hapi.ResponseToolk
         if(user?.heroId!=null){
             return Boom.badRequest("ya tiene un heroe asignado")
         }else{
-            const availabeHeros = await prisma.hero.findMany({
-            })
+            const assignhero = await getAvailableHero(prisma)
     
-            if(availabeHeros.length>0){
+            if(!assignhero){
+                return Boom.badRequest("No tenemos mas heroes para assignar. Escribemos a whatsapp para corregir error.")
+            }else{
+
                 const updateuser = await prisma.user.update({
                     where:{id:user!.id},
                     data: {
                         hero:{
-                            connect:{ id:availabeHeros[0].id} 
+                            connect:{ id:assignhero.id} 
                         }
                     }
                 })
                 return h.response(updateuser).code(200)
-            }else{
-                return Boom.badRequest("No tenemos mas heroes para assignar. Escribemos a whatsapp para corregir error.")
             }
-    
         }
 
     } catch(e) {
