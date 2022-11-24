@@ -9,7 +9,6 @@ export async function getAvailableHero(prisma:PrismaClient){
             heroId:true
         }
     })
-    console.log("🚀 ~ file: heros-helpers.ts ~ line 12 ~ getAvailableHero ~ takenHerosIds", takenHerosIds)
     const availabeHeros = await prisma.hero.findMany({
         where:{
             NOT: {
