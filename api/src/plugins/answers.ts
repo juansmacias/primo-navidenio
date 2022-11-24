@@ -8,11 +8,12 @@ const answerInputValidator = Joi.object({
         update: schema => schema.optional()
     }),answersform: Joi.array().items({
         tipId: Joi.number().integer().required(),
-        value: Joi.string().required()
+        value: Joi.string().required(),
+        answerId: Joi.number().integer().optional()
     }).alter({
         create: schema => schema.required(),
         update: schema => schema.optional(),
-      })
+    })
 })
 
 const createAnswerValidator = answerInputValidator.tailor('create')
@@ -73,6 +74,7 @@ const AnswerPlugin = {
 export default AnswerPlugin
 
 interface IAnswerItem {
+    answerId?:number
     tipId:number,
     value:string
 }
@@ -120,6 +122,24 @@ async function createAnswer(request: Hapi.Request, h: Hapi.ResponseToolkit){
 }
 
 async function updateAnswer(request: Hapi.Request, h: Hapi.ResponseToolkit){
+    const { prisma } = request.server.app
 
+    const payload = request.payload as IAnswerInput
+
+    try {
+        var updateAnswersFunc: any[] = []
+        payload.answersform.forEach(a => {
+
+            updateAnswersFunc.push(prisma.answer.update({
+                where:{id:a.answerId!},
+                data:{value:a.value}
+            }))
+        })
+
+        const result = await prisma.$transaction(updateAnswersFunc)
+        return h.response(result).code(200)
+    } catch(e) {
+        return Boom.badImplementation('Failed updating Answers '+e)
+    }
 }
 
