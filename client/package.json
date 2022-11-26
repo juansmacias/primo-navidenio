@@ -6,7 +6,9 @@
   "scripts": {
     "start": "webpack-dev-server --mode=development --open --hot",
     "build": "webpack --mode=production",
-    "watch:start": "webpack --watch"
+    "watch:start": "webpack --watch",
+    "predeploy" : "npm run build",
+    "deploy" : "gh-pages -d build"
   },
   "author": "",
   "license": "ISC",
@@ -59,6 +61,7 @@
     "babel-loader": "^8.2.5",
     "babel-plugin-config-module-resolver": "^1.0.2",
     "css-loader": "^6.7.1",
+    "gh-pages": "^4.0.0",
     "html-webpack-plugin": "^5.5.0",
     "interpolate-html-plugin": "^4.0.0",
     "nodemon-webpack-plugin": "^4.8.1",
