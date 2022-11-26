@@ -2,12 +2,6 @@ FROM node:16.14-alpine
 
 WORKDIR /usr
 
-ARG HOST
-ARG DATABASE_URL
-ARG JWT_SECRET
-ARG NODEMAILER_EMAIL
-ARG NODEMAILER_EMAIL_PASS
-
 COPY package*.json ./
 COPY tsconfig.json ./
 COPY src ./src
@@ -24,6 +18,9 @@ WORKDIR /usr
 COPY package.json ./
 RUN npm install --only=production
 COPY --from=0 /usr/dist .
+COPY --from=0 /usr/node_modules .
+COPY prisma .
+RUN npm run prisma:generate
 RUN npm install pm2 -g
 
 EXPOSE 3030
