@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react'
-import { Grid, Typography } from '@mui/material'
+import React from 'react'
 import HomeBanner from 'src/components/HomeBanner'
 import GameInstructions from 'src/components/GameInstructions'
 import HerosList from 'src/components/HerosList'

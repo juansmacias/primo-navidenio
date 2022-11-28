@@ -11,6 +11,7 @@ import RequireAuth from 'components/App/RequireAuth'
 import Home from 'pages/Home'
 import Login from 'pages/Login'
 import Layout from 'pages/Layout'
+import Profile from 'pages/Profile'
 import NotFound from 'pages/NotFound'
 import Authenticate from 'pages/Authenticate'
 // ------ Reducers -------
@@ -18,11 +19,17 @@ import Authenticate from 'pages/Authenticate'
 // ------ Utils ------
 
 import { goToLogin } from 'api/auth'
+import { getAvailableHeros } from 'api/heros'
 
 
 function login(data){
   return goToLogin(data)
 }
+function getAvailableHeros(){
+  return getAvailableHeros()
+}
+
+
 
 const App = () =>  {
 
@@ -36,7 +43,7 @@ const App = () =>  {
             <Route path='authenticate/:email' element={ <Authenticate /> } />
           </Route>
           <Route element={<RequireAuth/>}>
-            <Route path='profile' element={<p>hola</p>} />
+            <Route path='profile' element={<Profile externalEndpoints={login}/>} />
           </Route>
         </Route>
         <Route path='*' element={<NotFound/>}></Route>
