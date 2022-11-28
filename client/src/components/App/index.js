@@ -20,13 +20,19 @@ import Authenticate from 'pages/Authenticate'
 
 import { goToLogin } from 'api/auth'
 import { getAvailableHeros } from 'api/heros'
+import { assignHeroToUser, getUser } from 'api/users'
 
 
 function login(data){
   return goToLogin(data)
 }
-function getAvailableHeros(){
-  return getAvailableHeros()
+function getProfileEndpoints(token){
+  return {
+    herosAvailable: getAvailableHeros(),
+    getUser: getUser(),
+    assignHeroToUser: assignHeroToUser()
+  }
+    
 }
 
 
