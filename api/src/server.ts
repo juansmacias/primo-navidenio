@@ -8,6 +8,7 @@ import prismaPlugin from './plugins/prisma'
 import statusPlugin from './plugins/status'
 import tipsPlugin from './plugins/tips'
 import answerPlugin from './plugins/answers'
+import herosPlugin from './plugins/heros'
 
 const server: Hapi.Server = Hapi.server({
   port: process.env.PORT || 3030,
@@ -43,6 +44,7 @@ export async function createServer(): Promise<Hapi.Server> {
       userPlugin,
       tipsPlugin,
       answerPlugin,
+      herosPlugin,
       emailPlugin,
     ])
 

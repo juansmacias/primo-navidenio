@@ -134,7 +134,10 @@ async function getUserHandler(request: Hapi.Request, h: Hapi.ResponseToolkit){
         const user = await prisma.user.findUnique({
             where: {
                 id: userId,
-            },
+            }, include:{
+                hero:true,
+                answers:true
+            }
         })
 
         if(!user)
