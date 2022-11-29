@@ -4,11 +4,8 @@ import * as api from '../api/users'
 
 export const fetchUserById = createAsyncThunk(
     'users/getUser',
-    async (userId,thunkAPI, { getState, rejectWithValue }) => {
-        const { auth:{ token } } = getState()
-        console.log("🚀 ~ file: users.js ~ line 8 ~ userId", userId)
-        console.log("🚀 ~ file: users.js ~ line 14 ~ token", token)
-        
+    async (userId, { getState, rejectWithValue }) => {
+        const { auth:{ token } } = getState()       
       const response = await api.getUser(token,userId)
       return response.data
     }
@@ -16,16 +13,16 @@ export const fetchUserById = createAsyncThunk(
 
 const userSlice  = createSlice({
     name:'users',
-    initialState:{},
+    initialState:{entities:{}},
     reducers: { },
     extraReducers: (builder) => {
       builder.addCase(fetchUserById.fulfilled, (state, action) => {
-        state = action.payload 
+        state.entities = action.payload  
       })
     },
   })
   
-  //Selector
-  export const selectUser = (state) => state
+  //----- Selector -----
+  export const selectCurrentUserEntities = (state) => state.user.entities
   
   export default userSlice.reducer

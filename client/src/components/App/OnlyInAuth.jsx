@@ -1,11 +1,11 @@
 import React from 'react'
 import { Navigate,Outlet } from 'react-router-dom'
-import { useAuth } from 'hooks/useAuth'
+import { useIsAuth } from 'hooks/useAuth'
 
 const OnlyInAuth = () => {
-  const auth = useAuth()
+  const isAuth = useIsAuth()
   
-  return auth.user==null ? 
+  return !isAuth ? 
   ( <Outlet /> ) :
   ( <Navigate to='/' /> )
 }

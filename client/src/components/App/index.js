@@ -26,14 +26,7 @@ import { assignHeroToUser, getUser } from 'api/users'
 function login(data){
   return goToLogin(data)
 }
-function getProfileEndpoints(token){
-  return {
-    herosAvailable: getAvailableHeros(),
-    getUser: getUser(),
-    assignHeroToUser: assignHeroToUser()
-  }
-    
-}
+
 
 
 
@@ -49,7 +42,7 @@ const App = () =>  {
             <Route path='authenticate/:email' element={ <Authenticate /> } />
           </Route>
           <Route element={<RequireAuth/>}>
-            <Route path='profile' element={<Profile externalEndpoints={login}/>} />
+            <Route path='profile' element={<Profile />} />
           </Route>
         </Route>
         <Route path='*' element={<NotFound/>}></Route>

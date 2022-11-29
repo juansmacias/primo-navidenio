@@ -9,7 +9,8 @@ import {
 
 import { api } from 'api/auth'
 import authReducer from 'reducers/auth'
-import usersReducer from 'reducers/users'
+import userReducer from 'reducers/user'
+import tipsReducer from 'reducers/tips'
 
 const persistConfig = {
   key: 'root',
@@ -23,7 +24,8 @@ export const store = configureStore({
   reducer: {
     [api.reducerPath]: api.reducer,
     auth: persistedReducer,
-    users: usersReducer
+    user: userReducer,
+    tips:tipsReducer
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({
     serializableCheck: {

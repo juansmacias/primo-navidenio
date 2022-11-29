@@ -3,17 +3,17 @@ import { useFormContext } from 'react-hook-form'
 import { TextField } from '@mui/material'
 
 export default function BasicTextField(passThroughProps){
-    const { name } = passThroughProps
-    const [textValue, setTextValue ] = useState('')
+    const { formname,formid,value } = passThroughProps
+    const [textValue, setTextValue ] = useState(value?value:'')
     const { register, errors } = useFormContext()
-    const errorMessage = errors?.[name]?.message
+    const errorMessage = errors?.answersform?.[formid]?.[formname].message
 
     return (
-        <TextField { ...register(name,{ required:'Requerido' })}
+        <TextField { ...register(`answersform.${formid}.${formname}`,{ required:'Requerido' })}
             value={ textValue }
             helperText={errorMessage}
             error={!!errorMessage}
-            required
+            name={`answersform.[${formid}].${formname}`}
             onChange= {({ currentTarget: { value } }) => { setTextValue(value)}}
             { ...passThroughProps }
         />

@@ -1,14 +1,14 @@
 import React from 'react'
 import { Navigate, useLocation,Outlet } from 'react-router-dom'
 
-import { useAuth } from 'hooks/useAuth'
+import { useIsAuth } from 'hooks/useAuth'
 
 
 const RequireAuth = () => {
-  const auth = useAuth()
+  const isAuth = useIsAuth()
   const { pathname } = useLocation()
 
-  return auth.user ? 
+  return isAuth ? 
     (<Outlet/>):
     (<Navigate to="/login" state={{ from: pathname }} replace/>)
 

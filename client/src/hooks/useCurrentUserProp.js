@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux'
-import { selectCurrentUser } from 'reducers/auth'
+import { selectCurrentUserEntities } from 'reducers/user'
 
 export const useCurrentUserProp = (propName) => {
-  const user = useSelector(selectCurrentUser)
-  return user?.[propName]
+  const userProps = useSelector(selectCurrentUserEntities)
+  return userProps?.[propName]
 }
