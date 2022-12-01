@@ -67,6 +67,9 @@ const HeroInfoCard = ({heroid}) => {
         <Typography variant="body2" color="text.secondary">
           {hero?.description}       
         </Typography>
+        <Typography variant="body2" color="text.secondary">
+          Tu pareja es: {hero?.pareja}       
+        </Typography>
       </CardContent>
       <CardActions disableSpacing>
         <ExpandMore
