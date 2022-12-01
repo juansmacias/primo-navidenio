@@ -7,8 +7,8 @@ export const useCurrentHeros = () =>{
 }
 
 export const useHerosById = (heroId) =>{
+    const heroIdInt = parseInt(heroId)
     const heros = useSelector(selectCurrentHeros) 
-    console.log("🚀 ~ file: useCurrentHeros.js:13 ~ useHerosById ~ heros", heros)
-    const hero = heros.find(h=>h.id===heroId)
+    const hero = heros.find(h=>h.id===heroIdInt)
     return  hero
 }

@@ -21,7 +21,7 @@ const AssignHeroComponent = () =>{
     }
 
     return (
-        <React.Fragment  align={"center"}>
+        <React.Fragment>
             <Grid container spacing={2} direction='column' align={"center"}>
                 <Grid item xs={12} >
                     <Typography variant='h5' align='center'>Asignar Heroe</Typography>

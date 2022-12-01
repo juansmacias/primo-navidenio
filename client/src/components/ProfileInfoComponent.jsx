@@ -15,7 +15,6 @@ import { useCurrentUserHasAnswers,useCurrentUserHasAssignedHero } from 'hooks/us
 const ProfileInfoComponent = ({externalEndpoints}) => {
     const hasAnswers = useCurrentUserHasAnswers()
     const hasAssignedHero = useCurrentUserHasAssignedHero()
-    console.log("🚀 ~ file: ProfileInfoComponent.jsx ~ line 18 ~ ProfileInfoComponent ~ hasAssignedHero", hasAssignedHero)
     return (
         <Grid container spacing={2}>
             <Grid item xs={12}>

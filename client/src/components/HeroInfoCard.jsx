@@ -1,5 +1,8 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
+import Grid from '@mui/material/Grid'
 import Card from '@mui/material/Card'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
 import { styled } from '@mui/material/styles'
 import Collapse from '@mui/material/Collapse'
 import CardMedia from '@mui/material/CardMedia'
@@ -8,11 +11,15 @@ import Typography from '@mui/material/Typography'
 import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import CardActions from '@mui/material/CardActions'
+import ListItemIcon from '@mui/material/ListItemIcon'
+import ListItemText from '@mui/material/ListItemText'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 
 // ----- Hook -----
-
 import {useHerosById} from 'hooks/useCurrentHeros'
+
+// ----- API ------
+ import * as HerosAPI from 'api/heros'
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -28,14 +35,22 @@ const ExpandMore = styled((props) => {
 
 const HeroInfoCard = ({heroid}) => {
   const hero = useHerosById(heroid)
-  console.log("🚀 ~ file: HeroInfoCard.jsx:31 ~ HeroInfoCard ~ heroid", heroid)
-  console.log("🚀 ~ file: HeroInfoCard.jsx:31 ~ HeroInfoCard ~ hero", hero)
+  const [answers,setAnswers] = useState([])
 
   const [expanded, setExpanded] = useState(false)
 
   const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
+    setExpanded(!expanded)
+  }
+
+  useEffect(()=>{
+
+    HerosAPI.getAnswersByHeroId(heroid).then((response)=>{
+      if(response.status===200)
+        setAnswers(response.data)
+    })
+  },[])
+  console.log("🚀 ~ file: HeroInfoCard.jsx:39 ~ HeroInfoCard ~ answers", answers)
 
   return (
     <Card sx={{ maxWidth: 345 }}>
@@ -65,8 +80,21 @@ const HeroInfoCard = ({heroid}) => {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography variant='h4'>Tips:</Typography>
-
+        <Grid container spacing={2}> 
+          <Grid item xs={12} >
+            <Typography variant='h4'>Tips:</Typography>
+          </Grid>
+        {answers?.map((a) =>(
+          <Grid item xs={12} key={a.id}>
+            <Typography paragraph>{a.value}</Typography>
+          </Grid>
+        ))}
+        {answers?.length===0?
+        <Grid item xs={12} >
+          <Typography paragraph>Sin Tips</Typography>
+        </Grid>:''
+        }   
+        </ Grid>
         </CardContent>
       </Collapse>
     </Card>
