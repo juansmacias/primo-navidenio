@@ -54,6 +54,7 @@ const AnswerForm = ({externalEndpoints}) => {
                 const response = await externalEndpoints.postAnswers(data)
                 if(response){
                     dispatch(updateUser(response.data))
+                    window.scrollTo(0, 0)
                     setAlertMessage("Preguntas Guardadas")
     
                     setShowAlert(true)
@@ -62,6 +63,7 @@ const AnswerForm = ({externalEndpoints}) => {
                 const response = await externalEndpoints.putAnswers(data)
                 if(response){
                     dispatch(updateUser(response.data))
+                    window.scrollTo(0, 0)
                     setAlertMessage("Preguntas Guardadas")
     
                     setShowAlert(true)
