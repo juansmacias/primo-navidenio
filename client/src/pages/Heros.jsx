@@ -1,9 +1,18 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import { Grid,Typography } from '@mui/material'
+
+import { useDispatch } from 'react-redux'
 
 import HeroInfoList from 'components/HerosInfoList'
 
+// ----- Actions --------
+import { getHeros } from 'reducers/heros'
+
 export default function Heros () {
+    const dispatch = useDispatch()
+    useEffect(()=>{
+        dispatch(getHeros())
+    },[])
 return (
     <Grid container spacing={2}>
         <Grid item xs={12}>

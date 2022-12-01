@@ -10,17 +10,17 @@ export const getHeros = createAsyncThunk('heros/getHeros',
 )
 
 
-const tipsSlice = createSlice({
+const herosSlice = createSlice({
     name:'heros',
     initialState:{entities:[]},
     reducers: { },
     extraReducers: (builder) => {
-      builder.addCase(getTips.fulfilled, (state, action) => {
+      builder.addCase(getHeros.fulfilled, (state, action) => {
         state.entities = action.payload
       })
     },
 })
 
-export const selectCurrentTips = (state) => state.tips.entities
+export const selectCurrentHeros = (state) => state.heros.entities
 
-export default tipsSlice.reducer
+export default herosSlice.reducer

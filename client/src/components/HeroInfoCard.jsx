@@ -10,6 +10,10 @@ import CardContent from '@mui/material/CardContent'
 import CardActions from '@mui/material/CardActions'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 
+// ----- Hook -----
+
+import {useHerosById} from 'hooks/useCurrentHeros'
+
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
@@ -21,9 +25,13 @@ const ExpandMore = styled((props) => {
   }),
 }))
 
-const HeroInfoCard = () => {
 
-const [expanded, setExpanded] = useState(false);
+const HeroInfoCard = ({heroid}) => {
+  const hero = useHerosById(heroid)
+  console.log("🚀 ~ file: HeroInfoCard.jsx:31 ~ HeroInfoCard ~ heroid", heroid)
+  console.log("🚀 ~ file: HeroInfoCard.jsx:31 ~ HeroInfoCard ~ hero", hero)
+
+  const [expanded, setExpanded] = useState(false)
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -32,19 +40,17 @@ const [expanded, setExpanded] = useState(false);
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardHeader
-        title="Vision"
+        title={hero?.name}
       />
       <CardMedia
         component="img"
         height="194"
-        image="https://storage.googleapis.com/primos-navi-fotos/vision.png"
-        alt="Vision"
+        image={hero?.photoURL}
+        alt={hero?.name}
       />
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-        Visión, o la Visión, es un superhéroe ficticio que aparece en los cómics estadounidenses publicados por Marvel Comics. 
-        El personaje apareció por primera vez en Avengers Volumen 1 # 57, y se basa libremente en el personaje de Timely Comics 
-        del mismo nombre que era un extraterrestre de otra dimensión
+          {hero?.description}       
         </Typography>
       </CardContent>
       <CardActions disableSpacing>

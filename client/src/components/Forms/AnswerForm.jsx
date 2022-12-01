@@ -1,4 +1,5 @@
 import React,{ useState,useEffect  } from 'react'
+import { useDispatch } from 'react-redux'
 import { Grid, Typography,Button } from '@mui/material'
 import { FormProvider,useForm,useFieldArray, appendErrors } from 'react-hook-form'
 
@@ -9,10 +10,15 @@ import BasicTextField from 'components/Fields/BasicTextField'
 import { useCurrentUserProp } from 'hooks/useCurrentUserProp' 
 import { useCurrentTips } from 'hooks/useCurrentTips'
 
+// ------ Actions  -------
+import { updateUser } from 'reducers/auth'
+
 const AnswerForm = ({externalEndpoints}) => {
     const userId = useCurrentUserProp('id')
     const answers = useCurrentUserProp('answers')
     const tips = useCurrentTips()
+
+    const dispatch = useDispatch()
     const formMethods = useForm({defaultValues: {
         answersform: []
       }})
@@ -46,15 +52,18 @@ const AnswerForm = ({externalEndpoints}) => {
             data.answersform = data.answersform.map(({tipValue,...values})=>values)
             if(answers.length===0){
                 const response = await externalEndpoints.postAnswers(data)
-                if(response!== undefined){
+                console.log("🚀 ~ file: AnswerForm.jsx:55 ~ onSubmit ~ response", response)
+                if(response){
+                    dispatch(updateUser(response.data))
                     setAlertMessage("Preguntas Guardadas")
     
                     setShowAlert(true)
                 }
             } else {
                 const response = await externalEndpoints.putAnswers(data)
-                console.log("🚀 ~ file: AnswerForm.jsx ~ line 56 ~ onSubmit ~ response", response)
-                if(response!== undefined){
+                console.log("🚀 ~ file: AnswerForm.jsx:55 ~ onSubmit ~ response", response)
+                if(response){
+                    dispatch(updateUser(response.data))
                     setAlertMessage("Preguntas Guardadas")
     
                     setShowAlert(true)

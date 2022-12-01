@@ -3,9 +3,10 @@ import {Grid} from '@mui/material'
 
 import HeroInfoCard from 'components/HeroInfoCard'
 
-const HeroInfoList = () => {
-    
+// ----- Hooks --------
+import { useCurrentHeros } from 'hooks/useCurrentHeros'
 
+const HeroInfoList = () => {
     return(
     <Grid container spacing={2}>
         <Grid item xs={2}/>

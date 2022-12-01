@@ -6,7 +6,7 @@ import { Grid, Button, Paper, Box, Typography } from '@mui/material'
 
 // -----Components ------
 import AnswerForm from 'components/Forms/AnswerForm'
-import WheelOfHeros from 'components/WheelOfHeros'
+import AssignHeroComponent from 'components/AssignHeroComponent'
 import HeroInfoCompement from 'components/HeroInfoCompement'
 
 // -----Hook--------
@@ -24,7 +24,7 @@ const ProfileInfoComponent = ({externalEndpoints}) => {
             {hasAnswers&&!hasAssignedHero?
             <Grid item container direction="column" align={"center"} spacing={1} xs={6}>
                 <Grid item xs={12} display="flex" justifyContent="center">
-                    <WheelOfHeros/>
+                    <AssignHeroComponent/>
                 </Grid>
             </Grid>:''
             }
@@ -33,7 +33,7 @@ const ProfileInfoComponent = ({externalEndpoints}) => {
                     <HeroInfoCompement />
                 </Grid>:''
             }
-            <Grid item xs={hasAnswers&&!hasAssignedHero?6:12}>
+            <Grid item xs={12}>
                 <Typography variant='subtitle1' align='center'>Completa tu perfil. Ingresa sus preguntas para darle pistas a tu amigo secreto!</Typography>
                 <AnswerForm externalEndpoints={externalEndpoints}/>
             </Grid>

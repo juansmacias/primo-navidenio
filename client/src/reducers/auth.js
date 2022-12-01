@@ -36,6 +36,8 @@ const slice = createSlice({
       state.userEmail = null
       state.token = null
       state.user.entities = {}
+    },updateUser(state,action){
+      state.user.entities = action.payload
     }
   },
   extraReducers:(builder) => {
@@ -55,7 +57,7 @@ const slice = createSlice({
   }
 })
 
-export const { setCredentials, signOut } = slice.actions
+export const { setCredentials, signOut,updateUser } = slice.actions
 
 export default slice.reducer
 
