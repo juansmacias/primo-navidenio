@@ -7,18 +7,15 @@ import HeroInfoCard from 'components/HeroInfoCard'
 import { useCurrentHeros } from 'hooks/useCurrentHeros'
 
 const HeroInfoList = () => {
+    const heros = useCurrentHeros()
+
     return(
-    <Grid container spacing={2}>
-        <Grid item xs={2}/>
-        <Grid item xs={3}>
-            <HeroInfoCard heroid='1'/>
-        </Grid>
-        <Grid item xs={3}>
-            <HeroInfoCard heroid='2'/>
-        </Grid>
-        <Grid item xs={3}>
-            <HeroInfoCard heroid='3'/>
-        </Grid>
+    <Grid container spacing={2} m={10}>
+        {heros?.map((hero)=>(
+            <Grid item xs={3}>
+                <HeroInfoCard heroid={hero.id}/>
+            </Grid>
+        ))}
         <Grid item xs={2}/>
     </Grid>)
 }

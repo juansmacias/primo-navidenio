@@ -52,7 +52,6 @@ const AnswerForm = ({externalEndpoints}) => {
             data.answersform = data.answersform.map(({tipValue,...values})=>values)
             if(answers.length===0){
                 const response = await externalEndpoints.postAnswers(data)
-                console.log("🚀 ~ file: AnswerForm.jsx:55 ~ onSubmit ~ response", response)
                 if(response){
                     dispatch(updateUser(response.data))
                     setAlertMessage("Preguntas Guardadas")
@@ -61,7 +60,6 @@ const AnswerForm = ({externalEndpoints}) => {
                 }
             } else {
                 const response = await externalEndpoints.putAnswers(data)
-                console.log("🚀 ~ file: AnswerForm.jsx:55 ~ onSubmit ~ response", response)
                 if(response){
                     dispatch(updateUser(response.data))
                     setAlertMessage("Preguntas Guardadas")
