@@ -9,7 +9,6 @@ import {
 
 import { api } from 'api/auth'
 import authReducer from 'reducers/auth'
-import userReducer from 'reducers/user'
 import tipsReducer from 'reducers/tips'
 
 const persistConfig = {
@@ -24,7 +23,6 @@ export const store = configureStore({
   reducer: {
     [api.reducerPath]: api.reducer,
     auth: persistedReducer,
-    user: userReducer,
     tips:tipsReducer
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({

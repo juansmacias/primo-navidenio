@@ -8,7 +8,7 @@ import ProfileInfoComponent from 'src/components/ProfileInfoComponent'
 import { selectCurrentAuthUserId } from 'reducers/auth'
 
 // ------ Reducer -----
-import { fetchUserById } from 'reducers/user'
+import { fetchUserById } from 'reducers/auth'
 import { getTips } from 'reducers/tips'
 
 
@@ -23,7 +23,7 @@ export default function Profile ({externalEndpoints}){
 
     return (
         <React.Fragment>
-            <ProfileInfoComponent />
+            <ProfileInfoComponent externalEndpoints={externalEndpoints}/> 
         </React.Fragment> 
     )
 } 

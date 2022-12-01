@@ -9,7 +9,7 @@ import AnswerForm from 'components/Forms/AnswerForm'
 // -----Hook--------
 import { useCurrentUserProp } from 'hooks/useCurrentUserProp'
 
-const ProfileInfoComponent = () => {
+const ProfileInfoComponent = ({externalEndpoints}) => {
     
     return (
         <Grid container spacing={2} alignItems={"center"}>
@@ -18,7 +18,7 @@ const ProfileInfoComponent = () => {
             </Grid>
             <Grid item xs={12}>
                 <Typography variant='subtitle1' align='center'>Completa tu perfil. Ingresa sus preguntas para darle pistas a tu amigo secreto!</Typography>
-                <AnswerForm/>
+                <AnswerForm externalEndpoints={externalEndpoints}/>
             </Grid>
         </Grid>
     )

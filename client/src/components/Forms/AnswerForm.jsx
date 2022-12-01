@@ -9,89 +9,70 @@ import BasicTextField from 'components/Fields/BasicTextField'
 import { useCurrentUserProp } from 'hooks/useCurrentUserProp' 
 import { useCurrentTips } from 'hooks/useCurrentTips'
 
-const tips = [
-    {
-        "id": 55,
-        "question": "¿Su comida favorita?"
-    },
-    {
-        "id": 56,
-        "question": "Cuentame una historia de tu infancia a tu amigo secreto"
-    },
-    {
-        "id": 57,
-        "question": "¿Que color te gusta?"
-    },
-    {
-        "id": 58,
-        "question": "¿Cuál es su sueño + grande?"
-    },
-    {
-        "id": 59,
-        "question": "Cuál es su super poder?"
-    },
-    {
-        "id": 60,
-        "question": "¿Qué le da miedo?"
-    },
-    {
-        "id": 61,
-        "question": "¿Mar o Montaña? ¿Por qué?"
-    },
-    {
-        "id": 62,
-        "question": "¿Qué super poder tendrias si pudieras elegir?"
-    },
-    {
-        "id": 63,
-        "question": "¿Dónde ira de vacaciones?"
-    }
-]
-
-const AnswerForm = ({externalEndpoint}) => {
+const AnswerForm = ({externalEndpoints}) => {
     const userId = useCurrentUserProp('id')
     const answers = useCurrentUserProp('answers')
     const tips = useCurrentTips()
     const formMethods = useForm({defaultValues: {
         answersform: []
       }})
-    const { handleSubmit,control } = formMethods
+    const { handleSubmit,control,reset } = formMethods
     const { fields,append } = useFieldArray({ name: 'answersform', control })
 
     const [alertMessage, setAlertMessage] = useState('')
     const [showAlert,setShowAlert] = useState(false)
 
     useEffect(()=>{
-            if(showAlert){
-                showAlertInComp(alertMessage)
-                setShowAlert(!showAlert)
-            }
+        if(showAlert){
+            showAlertFunc(alertMessage)
+            setShowAlert(!showAlert)
+        }
     },[showAlert,alertMessage])
 
     useEffect(()=>{
+        reset()
         tips?.forEach(t => {
             const answer = answers?.find(a=>a.tipId===t.id)
-            append({ tipId:t.id, tipValue:t.question,value:answer?answer.value:""})
-        });
-    },[tips,answers])
+            if(answer)
+                append({ tipId:t.id, tipValue:t.question,value:answer.value,answerId:answer.id})
+            else
+                append({ tipId:t.id, tipValue:t.question,value:""})
+        })
+    },[tips,answers,reset])
 
     const onSubmit = async data => {
-        data['userid'] = userId
-        console.log("🚀 ~ file: answerForm.jsx ~ line 15 ~ onSubmit ~ data", data)
+        try {
+            data['userid'] = userId
+            data.answersform = data.answersform.map(({tipValue,...values})=>values)
+            if(answers===undefined){
+                const response = await externalEndpoints.postAnswers(data)
+                if(response!== undefined){
+                    setAlertMessage("Preguntas Guardadas")
+    
+                    setShowAlert(true)
+                }
+            } else {
+                const response = await externalEndpoints.putAnswers(data)
+                console.log("🚀 ~ file: AnswerForm.jsx ~ line 56 ~ onSubmit ~ response", response)
+                if(response!== undefined){
+                    setAlertMessage("Preguntas Guardadas")
+    
+                    setShowAlert(true)
+                }
+            }
 
-        // try {
-        //     const response = await externalEndpoint(data)
-        //     setAlertMessage("Preguntas Guardadas")
-
-        //     setShowAlert(true)
-        // }   
-        // catch(e) {
-        //     console.log('catch error: '+e)
+        }   
+        catch(e) {
+            console.log('catch error: '+e)
             
-        //     setAlertMessage("Error con el registro. Revistar datos y volver a intentar.2")
+            setAlertMessage("Error con el registro. Revistar datos y volver a intentar.2")
 
-        //     setShowAlert(true)
-        // }
+            setShowAlert(true)
+        }
+    }
+
+    function showAlertFunc(message){
+        alert(message)
     }
 
 return (
@@ -102,11 +83,11 @@ return (
             <Grid item xs={12} key={item.id} container spacing={1} sx={{m:2,color:'black'}}>
                 <Typography variant='h4'>{"Pregunta #"+(i+1)}</Typography>
                 <Grid item xs={12}>
-                    <BasicTextField formname="tipValue" type="text" formid={i} value={item.tipValue} disabled={true} fullWidth sx={{mb:4}}> </BasicTextField>
-                    <BasicTextField formname="tipId" type="hidden" formid={i} value={item.tipId} disabled={true} fullWidth sx={{mb:4,width:0}}> </BasicTextField>                
+                    <BasicTextField formname="tipValue" type="text" formid={i} defaultfvalue={item.tipValue} disabled={true} fullWidth sx={{mb:4}}> </BasicTextField>
+                    <BasicTextField formname="tipId" type="hidden" formid={i} defaultfvalue={item.tipId} disabled={true} fullWidth sx={{mb:4,width:0}}> </BasicTextField>                
                 </Grid>
                 <Grid item xs={12}>
-                    <BasicTextField formname="value" type="text" formid={i} multiline={true} required fullWidth sx={{mb:4}}> </BasicTextField>
+                    <BasicTextField formname="value" type="text" formid={i} multiline={true} defaultfvalue={item.value} required fullWidth sx={{mb:4}}> </BasicTextField>
                 </Grid>          
             </Grid>
         ))}
