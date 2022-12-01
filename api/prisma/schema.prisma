@@ -41,6 +41,8 @@ enum TokenType {
 model Hero {
     id          Int       @id @default(autoincrement())
     name        String
+    description String? @db.VarChar(10000)
+    pareja      String?
     photoURL    String
 
     user User?

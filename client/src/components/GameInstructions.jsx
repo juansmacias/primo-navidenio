@@ -40,7 +40,7 @@ function GameInstructions() {
       >
         <Box
           component="img"
-          src="/static/themes/onepirate/productCurvyLines.png"
+          src=""
           alt="curvy lines"
           sx={{
             pointerEvents: 'none',

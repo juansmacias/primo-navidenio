@@ -7,7 +7,7 @@ import { AppBar, Box, Toolbar, Typography, IconButton, Menu,
     MenuItem, Container, Button,Link }  from '@mui/material'
 
 // ------- Hooks ----
-import {useAuth} from 'hooks/useAuth'
+import {useIsAuth} from 'hooks/useAuth'
 import { useCurrentUserProp } from 'hooks/useCurrentUserProp'
 
 // ------- Actions -----
@@ -18,13 +18,20 @@ const defaultPages = [{
         name:'Inicio',
         url:'/'
     },{
+        name:'Heroes',
+        url:'/heros'
+    },{
         name:'Ingresar',
         url:'/login'
-}]
+    }
+]
 
 const defaultAuthPages = [{
         name:'Inicio',
         url:'/'
+    },{
+        name:'Heroes',
+        url:'/heros'
     },{
         name:'Perfil',
         url:'/profile'
@@ -35,12 +42,12 @@ const defaultAuthPages = [{
 
 const MainAppBar = () =>{
     var pages = defaultPages
-    const auth = useAuth()
+    const isAuth = useIsAuth()
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [anchorElNav, setAnchorElNav] = React.useState(null)
 
-  if(auth.user!=null){
+  if(isAuth){
     pages = defaultAuthPages
   }
 

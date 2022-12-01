@@ -1,12 +1,15 @@
 import { PrismaClient, } from '@prisma/client'
+import { string } from 'joi'
 import { create } from 'lodash'
 import {IHero, ITip } from '../models/IModels'
 
-export async function createHero(prisma:PrismaClient,name:string,photoURL:string){
+export async function createHero(prisma:PrismaClient,name:string,photoURL:string,description:string,pareja:string){
     return prisma.hero.create({
         data:{
             name,
-            photoURL
+            photoURL,
+            description,
+            pareja,
         }
     })
 }

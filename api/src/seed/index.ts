@@ -9,7 +9,7 @@ const prisma = new PrismaClient()
 
 async function seedHerosFunc(){
     seedHeros.forEach(async (e) =>{
-      await createHero(prisma,e.name,e.photoURL)
+      await createHero(prisma,e.name,e.photoURL,e.description!,e.pareja!)
     })
 }
 

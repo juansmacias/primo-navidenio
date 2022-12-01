@@ -1,33 +1,71 @@
-import { createSlice } from '@reduxjs/toolkit'
-import { api } from 'api/auth'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { api as AuthAPI } from 'api/auth'
+import * as UserAPI from 'api/users'
+
+const INITIALSTATE = {
+  userId: null,
+  token: null,
+  userEmail:null,
+  user:{entities:{}}
+}
+
+export const fetchUserById = createAsyncThunk(
+  'users/getUser',
+  async (userId, { getState, rejectWithValue }) => {
+      const { auth:{ token } } = getState()       
+    const response = await UserAPI.getUser(token,userId)
+    return response.data
+  }
+)
+
+export const assignUserHero = createAsyncThunk(
+  'users/assignHero',
+  async (userId, { getState, rejectWithValue }) => {
+      const { auth:{ token } } = getState()       
+    const response = await UserAPI.assignHeroToUser(token,userId)
+    return response.data
+  }
+)
 
 const slice = createSlice({
   name: 'auth',
-  initialState: { user: null, token: null },
+  initialState: INITIALSTATE,
   reducers: {
     signOut(state){
-      state.user = null
+      state.userId = null
+      state.userEmail = null
       state.token = null
+      state.user.entities = {}
+    },updateUser(state,action){
+      state.user.entities = action.payload
     }
   },
   extraReducers:(builder) => {
-    builder.addMatcher(
-      api.endpoints.authenticate.matchFulfilled,
+    builder.addCase(fetchUserById.fulfilled, (state, action) => {
+      state.user.entities = action.payload  
+    }),builder.addCase(assignUserHero.fulfilled,(state,action) =>{
+      state.user.entities = action.payload
+    }),builder.addMatcher(
+      AuthAPI.endpoints.authenticate.matchFulfilled,
       (state,{payload, meta }) =>{
         const headers = meta.baseQueryMeta.response.headers
-        state.user = payload
+        state.userId = payload.id
+        state.userEmail = payload.email
         state.token = headers.get('authorization')
       }
     )
   }
 })
 
-export const { setCredentials, signOut } = slice.actions
+export const { setCredentials, signOut,updateUser } = slice.actions
 
 export default slice.reducer
 
-export const selectCurrentUser = (state) => state.auth.user
+  //----- Selector -----
+export const selectCurrentToken = (state) => state.auth?.token
 
-export const selectCurrentToken = (state) => state.auth.token
+export const selectCurrentAuthUserId = (state) => state.auth?.userId
 
 export const selectCurrentAuth = (state)  => state.auth
+
+  export const selectCurrentUserEntities = (state) => state.auth?.user?.entities

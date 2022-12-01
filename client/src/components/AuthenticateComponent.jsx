@@ -28,7 +28,7 @@ const AuthenticateComponent = () =>{
     async function handleAuthenticate(data){
         try {
             await authenticate(data).unwrap()
-            navigate('/',{replace:true})
+            navigate('/profile',{replace:true})
         } catch (e) {
             console.log("🚀 ~ file: AuthenticateComponent.jsx ~ line 42 ~ handleAuthenticate ~ e", e)
         }

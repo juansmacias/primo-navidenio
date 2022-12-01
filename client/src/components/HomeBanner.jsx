@@ -3,7 +3,7 @@ import {Button,Typography} from '@mui/material'
 import HomeBannerLayout from '../layouts/HomeBannerLayout'
 
 const backgroundImage =
-  'https://storage.googleapis.com/primos-navi-fotos/IMG-0692.jpg'
+  'https://storage.googleapis.com/primos-navi-fotos/primos2021.jpg'
 
 export default function HomeBanner() {
   return (

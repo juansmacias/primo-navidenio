@@ -115,7 +115,15 @@ async function createAnswer(request: Hapi.Request, h: Hapi.ResponseToolkit){
         const answers = await prisma.answer.createMany({
             data:dataAnswers
         })
-        return h.response(answers).code(200)
+        const updatedUser = await prisma.user.findUnique({
+            where:{
+                id:payload.userid
+            },include:{
+                hero:true,
+                answers:true
+            }
+        })
+        return updatedUser?h.response(updatedUser).code(200):Boom.badImplementation('Failed fetching updated user')
     } catch(e) {
         return Boom.badImplementation('Failed creating Answers '+e)
     }
@@ -137,7 +145,15 @@ async function updateAnswer(request: Hapi.Request, h: Hapi.ResponseToolkit){
         })
 
         const result = await prisma.$transaction(updateAnswersFunc)
-        return h.response(result).code(200)
+        const updatedUser = await prisma.user.findUnique({
+            where:{
+                id:payload.userid
+            },include:{
+                hero:true,
+                answers:true
+            }
+        })
+        return updatedUser?h.response(updatedUser).code(200):Boom.badImplementation('Failed fetching updated user')
     } catch(e) {
         return Boom.badImplementation('Failed updating Answers '+e)
     }
