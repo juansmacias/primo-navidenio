@@ -43,7 +43,7 @@ async function sendMailTrapEmailToken(email: string, token: string) {
     from : 'juansmacias@gmail.com', 
     to : email, 
     subject : 'Codigo de Primo navideño', 
-    text: `Codigo para ingresar al app d primo navideño: ${token}`
+    text: `Codigo para ingresar al app de primo navideño: ${token}`
     }; 
 
     await transport.sendMail( mailOptions, (error, info) => { 
