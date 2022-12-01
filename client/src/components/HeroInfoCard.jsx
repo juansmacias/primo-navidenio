@@ -50,7 +50,6 @@ const HeroInfoCard = ({heroid}) => {
         setAnswers(response.data)
     })
   },[])
-  console.log("🚀 ~ file: HeroInfoCard.jsx:39 ~ HeroInfoCard ~ answers", answers)
 
   return (
     <Card sx={{ maxWidth: 345 }}>

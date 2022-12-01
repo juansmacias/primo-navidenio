@@ -10,13 +10,12 @@ const HeroInfoList = () => {
     const heros = useCurrentHeros()
 
     return(
-    <Grid container spacing={2} m={10}>
+    <Grid container spacing={2} p={1}>
         {heros?.map((hero)=>(
-            <Grid item xs={3}>
+            <Grid item xs={6}  md={3}>
                 <HeroInfoCard heroid={hero.id}/>
             </Grid>
         ))}
-        <Grid item xs={2}/>
     </Grid>)
 }
 

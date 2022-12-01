@@ -2,10 +2,13 @@ import * as React from 'react';
 import {Button,Typography} from '@mui/material'
 import HomeBannerLayout from '../layouts/HomeBannerLayout'
 
+import { useIsAuth } from 'hooks/useAuth'
+
 const backgroundImage =
   'https://storage.googleapis.com/primos-navi-fotos/primos2021.jpg'
 
 export default function HomeBanner() {
+  const isAuth = useIsAuth()
   return (
     <HomeBannerLayout
       sxBackground={{
@@ -36,10 +39,10 @@ export default function HomeBanner() {
         variant="contained"
         size="large"
         component="a"
-        href="/login"
+        href={isAuth?"/perfil":"/login"}
         sx={{ minWidth: 200 }}
       >
-        Iniciar Sesión
+        {isAuth?"Perfil":"Iniciar Sesión"} 
       </Button>
     </HomeBannerLayout>
   );
