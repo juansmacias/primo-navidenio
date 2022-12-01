@@ -6,17 +6,34 @@ import { Grid, Button, Paper, Box, Typography } from '@mui/material'
 
 // -----Components ------
 import AnswerForm from 'components/Forms/AnswerForm'
+import WheelOfHeros from 'components/WheelOfHeros'
+import HeroInfoCompement from 'components/HeroInfoCompement'
+
 // -----Hook--------
-import { useCurrentUserProp } from 'hooks/useCurrentUserProp'
+import { useCurrentUserHasAnswers,useCurrentUserHasAssignedHero } from 'hooks/useCurrentUserProp'
 
 const ProfileInfoComponent = ({externalEndpoints}) => {
-    
+    const hasAnswers = useCurrentUserHasAnswers()
+    const hasAssignedHero = useCurrentUserHasAssignedHero()
+    console.log("🚀 ~ file: ProfileInfoComponent.jsx ~ line 18 ~ ProfileInfoComponent ~ hasAssignedHero", hasAssignedHero)
     return (
-        <Grid container spacing={2} alignItems={"center"}>
+        <Grid container spacing={2}>
             <Grid item xs={12}>
                 <Typography variant='h3' align='center' sx={{mt:2}}> Perfil </Typography>
             </Grid>
-            <Grid item xs={12}>
+            {hasAnswers&&!hasAssignedHero?
+            <Grid item container direction="column" align={"center"} spacing={1} xs={6}>
+                <Grid item xs={12} display="flex" justifyContent="center">
+                    <WheelOfHeros/>
+                </Grid>
+            </Grid>:''
+            }
+            {hasAssignedHero?
+                <Grid item xs={12}>
+                    <HeroInfoCompement />
+                </Grid>:''
+            }
+            <Grid item xs={hasAnswers&&!hasAssignedHero?6:12}>
                 <Typography variant='subtitle1' align='center'>Completa tu perfil. Ingresa sus preguntas para darle pistas a tu amigo secreto!</Typography>
                 <AnswerForm externalEndpoints={externalEndpoints}/>
             </Grid>

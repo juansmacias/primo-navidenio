@@ -18,13 +18,20 @@ const defaultPages = [{
         name:'Inicio',
         url:'/'
     },{
+        name:'Heroes',
+        url:'/heros'
+    },{
         name:'Ingresar',
         url:'/login'
-}]
+    }
+]
 
 const defaultAuthPages = [{
         name:'Inicio',
         url:'/'
+    },{
+        name:'Heroes',
+        url:'/heros'
     },{
         name:'Perfil',
         url:'/profile'

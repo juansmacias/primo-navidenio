@@ -18,6 +18,15 @@ export const fetchUserById = createAsyncThunk(
   }
 )
 
+export const assignUserHero = createAsyncThunk(
+  'users/assignHero',
+  async (userId, { getState, rejectWithValue }) => {
+      const { auth:{ token } } = getState()       
+    const response = await UserAPI.assignHeroToUser(token,userId)
+    return response.data
+  }
+)
+
 const slice = createSlice({
   name: 'auth',
   initialState: INITIALSTATE,
@@ -32,6 +41,8 @@ const slice = createSlice({
   extraReducers:(builder) => {
     builder.addCase(fetchUserById.fulfilled, (state, action) => {
       state.user.entities = action.payload  
+    }),builder.addCase(assignUserHero.fulfilled,(state,action) =>{
+      state.user.entities = action.payload
     }),builder.addMatcher(
       AuthAPI.endpoints.authenticate.matchFulfilled,
       (state,{payload, meta }) =>{

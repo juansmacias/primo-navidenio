@@ -44,7 +44,7 @@ const AnswerForm = ({externalEndpoints}) => {
         try {
             data['userid'] = userId
             data.answersform = data.answersform.map(({tipValue,...values})=>values)
-            if(answers===undefined){
+            if(answers.length===0){
                 const response = await externalEndpoints.postAnswers(data)
                 if(response!== undefined){
                     setAlertMessage("Preguntas Guardadas")

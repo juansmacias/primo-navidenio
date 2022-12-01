@@ -195,6 +195,9 @@ async function assignHeroUserhander(request: Hapi.Request, h: Hapi.ResponseToolk
                         hero:{
                             connect:{ id:assignhero.id} 
                         }
+                    }, include:{
+                        hero:true,
+                        answers:true
                     }
                 })
                 return h.response(updateuser).code(200)

@@ -11,6 +11,7 @@ import SignOut from 'components/SignOut'
 // --------- Pages ----------
 import Home from 'pages/Home'
 import Login from 'pages/Login'
+import Heros from 'pages/Heros'
 import Layout from 'pages/Layout'
 import Profile from 'pages/Profile'
 import NotFound from 'pages/NotFound'
@@ -45,6 +46,7 @@ const App = () =>  {
       <Routes>
         <Route path="/*" element={<Layout />}>
           <Route index element={<Home/>}/>
+          <Route path='heros' element={<Heros />} />
           <Route element={<OnlyInAuth/>}>
             <Route path='login' element={<Login externalEndpoint={login}/>} />
             <Route path='authenticate/:email' element={ <Authenticate /> } />
