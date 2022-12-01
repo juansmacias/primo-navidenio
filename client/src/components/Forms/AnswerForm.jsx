@@ -90,7 +90,7 @@ return (
             <Grid item xs={12} key={item.id} container spacing={1} sx={{m:2,color:'black'}}>
                 <Typography variant='h4'>{"Pregunta #"+(i+1)}</Typography>
                 <Grid item xs={12}>
-                    <BasicTextField formname="tipValue" type="text" formid={i} defaultfvalue={item.tipValue} disabled={true} fullWidth sx={{mb:4}}> </BasicTextField>
+                    <BasicTextField formname="tipValue" type="text" formid={i} defaultfvalue={item.tipValue} multiline={true} disabled={true} fullWidth sx={{mb:4}}> </BasicTextField>
                     <BasicTextField formname="tipId" type="hidden" formid={i} defaultfvalue={item.tipId} disabled={true} fullWidth sx={{mb:4,width:0}}> </BasicTextField>                
                 </Grid>
                 <Grid item xs={12}>
